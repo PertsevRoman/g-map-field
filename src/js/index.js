@@ -53,5 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let marker = new ContentMarker();
 
-    marker.load(map, pointCoords);
+    google.maps.event.addListener(map, 'click', function(event) {
+        const markerCoords = event.latLng;
+        marker.load(map, markerCoords);
+    });
 });

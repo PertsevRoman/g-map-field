@@ -4,6 +4,10 @@
 
 export function initGui(data) {
     $('#create-path').click(function () {
-        data.createPath()
+        data.createPath();
+    });
+
+    $('#close-path').click(function () {
+        data.closePath();
     });
 }

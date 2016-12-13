@@ -24,7 +24,7 @@ class PathStorage {
         if(path instanceof Path) {
             this._storage[this._counter] = path;
 
-
+            this.showPath(this._storage[this._counter]);
 
             this.counter += 1;
         }
@@ -55,7 +55,7 @@ class PathGenerator {
     }
     _map;
     _path = [];
-    _counter = 0;
+    _counter = 1;
     _storage = null;
 
     constructor(map, storage) {
@@ -79,7 +79,7 @@ class PathGenerator {
             }
 
             this._path = [];
-            this.counter = 0;
+            this.counter = 1;
         }
 
         this._inState = value;
@@ -122,6 +122,12 @@ class Path {
         this._markers = value;
     }
     _markers = [];
+
+    /**
+     * Получение сериализованного массива
+     */
+    get serialization() {
+    }
 
     constructor(markers) {
         this.markers = markers;
@@ -206,6 +212,9 @@ document.addEventListener('DOMContentLoaded', function () {
     initGui({
         createPath: function () {
             pathGenerator.start();
+        },
+        closePath: function () {
+            pathGenerator.finish();
         }
     });
 

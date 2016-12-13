@@ -6,7 +6,39 @@
 
 import {initGui} from "./gui";
 
+class PathStorage {
+    get counter() {
+        return this._counter;
+    }
+
+    set counter(value) {
+        this._counter = value;
+    }
+    _counter = 0;
+    _storage = {};
+
+    showPath() {
+    }
+
+    addPath(path) {
+        if(path instanceof Path) {
+            this._storage[this._counter] = path;
+
+
+
+            this.counter += 1;
+        }
+    }
+}
+
 class PathGenerator {
+    get storage() {
+        return this._storage;
+    }
+
+    set storage(value) {
+        this._storage = value;
+    }
     get counter() {
         return this._counter;
     }
@@ -24,10 +56,12 @@ class PathGenerator {
     _map;
     _path = [];
     _counter = 0;
+    _storage = null;
 
-    constructor(map) {
+    constructor(map, storage) {
         if(map) {
             this.map = map;
+            this.storage = storage;
         }
     }
 
@@ -38,6 +72,12 @@ class PathGenerator {
     set inState(value) {
         if(value) {
         } else {
+            if(this._path.length > 0) {
+                let path = new Path(this._path);
+
+                this.storage.addPath(path);
+            }
+
             this._path = [];
             this.counter = 0;
         }
@@ -63,14 +103,29 @@ class PathGenerator {
 
             marker.load(this.map.map, coords, this.counter);
 
-            this._path.push(coords);
+            this._path.push(marker);
 
             this.counter += 1;
         }
     }
 }
 
+/**
+ * Класс пути
+ */
 class Path {
+    get markers() {
+        return this._markers;
+    }
+
+    set markers(value) {
+        this._markers = value;
+    }
+    _markers = [];
+
+    constructor(markers) {
+        this.markers = markers;
+    }
 }
 
 class Map {
@@ -145,7 +200,8 @@ document.addEventListener('DOMContentLoaded', function () {
     let gmap = new Map();
 
     let marker = new ContentMarker();
-    let pathGenerator = new PathGenerator(gmap);
+    let storage = new PathStorage();
+    let pathGenerator = new PathGenerator(gmap, storage);
 
     initGui({
         createPath: function () {

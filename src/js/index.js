@@ -7,6 +7,13 @@
 import {initGui} from "./gui";
 
 class PathStorage {
+    get map() {
+        return this._map;
+    }
+
+    set map(value) {
+        this._map = value;
+    }
     get counter() {
         return this._counter;
     }
@@ -17,7 +24,54 @@ class PathStorage {
     _counter = 0;
     _storage = {};
 
-    showPath() {
+    _directionsService = null;
+    _directionsDisplay = null;
+
+    _map = null;
+
+
+    constructor(map) {
+        if(map) {
+            this.map = map;
+        }
+
+        this._directionsService = new google.maps.DirectionsService();
+        this._directionsDisplay = new google.maps.DirectionsRenderer();
+
+        this._directionsDisplay.setMap(this.map.map);
+    }
+
+    waypoints(coords) {
+        let result = [];
+
+        for(let i = 1; i < coords.length - 1; ++i) {
+            result.push({
+                location: coords[i],
+                stopover: true
+            });
+        }
+
+        return result;
+    }
+
+    showPath(path) {
+        let coords = path.coordsArray;
+        let waypoints = this.waypoints(coords);
+
+        console.log(waypoints);
+
+        let request = {
+            origin: coords[0],
+            waypoints,
+            destination: coords[coords.length - 1],
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+        this._directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                this._directionsDisplay.setDirections(response);
+            }
+        }.bind(this));
     }
 
     addPath(path) {
@@ -129,6 +183,14 @@ class Path {
     get serialization() {
     }
 
+    get coordsArray() {
+        let result = this.markers.map(function (coord) {
+            return coord.getPosition();
+        });
+
+        return result;
+    }
+
     constructor(markers) {
         this.markers = markers;
     }
@@ -173,7 +235,12 @@ class ContentMarker {
         }
     }
 
+    _marker = null;
     _template = 'content.html';
+
+    getPosition() {
+        return this._marker.getPosition();
+    }
 
      load(map, coords, label) {
          let data = document.createElement('div');
@@ -186,7 +253,8 @@ class ContentMarker {
 
          const markerOptions = {
              position: coords,
-             map: map
+             map: map,
+             draggable: true
          };
 
          if(label) {
@@ -194,9 +262,9 @@ class ContentMarker {
          }
 
 
-         let marker = new google.maps.Marker(markerOptions);
+         this._marker = new google.maps.Marker(markerOptions);
 
-         marker.addListener('click', function() {
+         this._marker.addListener('click', function() {
              infowindow.open(map, marker);
          });
      }
@@ -206,7 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let gmap = new Map();
 
     let marker = new ContentMarker();
-    let storage = new PathStorage();
+    let storage = new PathStorage(gmap);
     let pathGenerator = new PathGenerator(gmap, storage);
 
     initGui({

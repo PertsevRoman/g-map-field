@@ -63,7 +63,16 @@ gulp.task('watch', function () {
 gulp.task('webserver', ['watch'], function () {
     gulp.src('.')
         .pipe(server({
-            livereload: true,
+            livereload: {
+                enable: true,
+                filter: function(filePath, cb) {
+                    cb(
+                        !(/node_modules/.test(filePath)) &&
+                            (/.(html|less|css|js)/.test(filePath)) &&
+                            !(/.(json|gitignore|babelrc|git)/.test(filePath))
+                    )
+                }
+            },
             directoryListing: true,
             open: true,
             defaultFile: 'index.html'

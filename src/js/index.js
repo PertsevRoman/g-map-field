@@ -6,10 +6,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const element = document.getElementById('g-maps');
 
-    console.log(element);
-
     let map = new google.maps.Map(element, {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
+        center: {lat: 52.61667, lng: 39.6000},
+        zoom: 16
     });
 });

@@ -2,10 +2,17 @@ const gulp = require('gulp');
 const gulpLess = require('gulp-less');
 const gulpSourcemaps = require('gulp-sourcemaps');
 const server = require('gulp-server-livereload');
+const browserify = require('browserify');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const watch = require('gulp-watch');
 const batch = require('gulp-batch');
+
+const babelify= require('babelify');
+const util = require('gulp-util');
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
+
 
 const cssDest = './dist/css';
 const jsDest = './dist/js';
@@ -15,6 +22,19 @@ const externalLibs = [
     'node_modules/bootstrap/dist/js/bootstrap.js'
 ];
 const libsFileName = 'libs.js';
+
+gulp.task('compile', function() {
+    browserify(['./src/js/index.js'], { debug: true })
+        .add(require.resolve('./node_modules/babel-polyfill/dist/polyfill'))
+        .transform(babelify)
+        .bundle()
+        .on('error', util.log.bind(util, 'Browserify Error'))
+        .pipe(source('index.js'))
+        .pipe(buffer())
+        .pipe(gulpSourcemaps.init({loadMaps: true}))
+        .pipe(gulpSourcemaps.write('./'))
+        .pipe(gulp.dest(jsDest));
+});
 
 gulp.task('concat', function () {
     gulp.src(externalLibs)
@@ -29,16 +49,6 @@ gulp.task('less', function () {
         .pipe(gulpLess())
         .pipe(gulpSourcemaps.write())
         .pipe(gulp.dest(cssDest));
-});
-
-gulp.task('compile', function () {
-    gulp
-        .src('src/js/index.js')
-        .pipe(babel({
-            presets: ['es2015'],
-            plugins: ['transform-class-properties']
-        }))
-        .pipe(gulp.dest(jsDest));
 });
 
 gulp.task('default', ['less', 'compile', 'concat'], function() {

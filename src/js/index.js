@@ -1,7 +1,72 @@
 /**
  * Created by joker on 13.12.16.
  *
+ * Получение данных
  */
+
+import {initGui} from "./gui";
+
+class PathGenerator {
+    get map() {
+        return this._map;
+    }
+
+    set map(value) {
+        this._map = value;
+    }
+    _map;
+    _path = [];
+    _linePath = null;
+
+    constructor(map) {
+        if(map) {
+            this.map = map;
+        }
+    }
+
+    get inState() {
+        return this._inState;
+    }
+
+    set inState(value) {
+        if(value) {
+        } else {
+            this._path = [];
+
+            this._linePath = new google.maps.Polyline({
+                path: this._path,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+        }
+
+        this._inState = value;
+    }
+
+    _inState = false;
+    /**
+     * Запуск генератора
+     */
+    start() {
+        this.inState = true;
+    }
+
+    finish() {
+        this.inState = false;
+    }
+
+    add(coords) {
+        if(this.inState) {
+            this._path.push(coords);
+            this._linePath.setPath(this._path);
+        }
+    }
+}
+
+class Path {
+}
 
 class Map {
     get map() {
@@ -61,17 +126,28 @@ class ContentMarker {
          marker.addListener('click', function() {
              infowindow.open(map, marker);
          });
-
-         console.log(data);
      }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     let gmap = new Map();
+
     let marker = new ContentMarker();
+    let pathGenerator = new PathGenerator(gmap);
+
+    initGui({
+        createPath: function () {
+            pathGenerator.start();
+        }
+    });
 
     google.maps.event.addListener(gmap.map, 'click', function(event) {
         const markerCoords = event.latLng;
-        marker.load(gmap.map, markerCoords);
+
+        if(pathGenerator.inState) {
+            pathGenerator.add(markerCoords);
+        } else {
+            marker.load(gmap.map, markerCoords);
+        }
     });
 });

@@ -7,6 +7,13 @@
 import {initGui} from "./gui";
 
 class PathGenerator {
+    get counter() {
+        return this._counter;
+    }
+
+    set counter(value) {
+        this._counter = value;
+    }
     get map() {
         return this._map;
     }
@@ -16,7 +23,7 @@ class PathGenerator {
     }
     _map;
     _path = [];
-    _linePath = null;
+    _counter = 0;
 
     constructor(map) {
         if(map) {
@@ -32,14 +39,7 @@ class PathGenerator {
         if(value) {
         } else {
             this._path = [];
-
-            this._linePath = new google.maps.Polyline({
-                path: this._path,
-                geodesic: true,
-                strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
-                strokeWeight: 2
-            });
+            this.counter = 0;
         }
 
         this._inState = value;
@@ -59,8 +59,13 @@ class PathGenerator {
 
     add(coords) {
         if(this.inState) {
+            let marker = new ContentMarker();
+
+            marker.load(this.map.map, coords, this.counter);
+
             this._path.push(coords);
-            this._linePath.setPath(this._path);
+
+            this.counter += 1;
         }
     }
 }
@@ -109,7 +114,7 @@ class ContentMarker {
 
     _template = 'content.html';
 
-     load(map, coords) {
+     load(map, coords, label) {
          let data = document.createElement('div');
          
          $(data).load('src/tpl/' + this.template);
@@ -118,10 +123,17 @@ class ContentMarker {
              content: data
          });
 
-         let marker = new google.maps.Marker({
+         const markerOptions = {
              position: coords,
              map: map
-         });
+         };
+
+         if(label) {
+             markerOptions['label'] = label + '';
+         }
+
+
+         let marker = new google.maps.Marker(markerOptions);
 
          marker.addListener('click', function() {
              infowindow.open(map, marker);

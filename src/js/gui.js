@@ -3,7 +3,7 @@
  */
 
 export function initGui(data) {
-    $('create-path').click(function () {
+    $('#create-path').click(function () {
         data.createPath()
     });
 }

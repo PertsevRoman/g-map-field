@@ -1,16 +1,15 @@
 /**
  * Created by joker on 13.12.16.
- * 
+ *
  */
 
-class Gas {
-    get data() {
-        return this._data;
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    const element = document.getElementById('g-maps');
 
-    set data(value) {
-        this._data = value;
-    }
+    console.log(element);
 
-    _data;
-}
+    let map = new google.maps.Map(element, {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+    });
+});

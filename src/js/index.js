@@ -3,6 +3,31 @@
  *
  */
 
+class Map {
+    get map() {
+        return this._map;
+    }
+
+    set map(value) {
+        this._map = value;
+    }
+
+    /**
+     * Ссылка на объект карт
+     */
+    _map;
+
+    constructor() {
+        const element = document.getElementById('g-maps');
+        var pointCoords = {lat: 52.61667, lng: 39.6000};
+
+        this._map = new google.maps.Map(element, {
+            center: pointCoords,
+            zoom: 16
+        });
+    }
+}
+
 class ContentMarker {
     get template() {
         return this._template;
@@ -42,19 +67,11 @@ class ContentMarker {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const element = document.getElementById('g-maps');
-
-    var pointCoords = {lat: 52.61667, lng: 39.6000};
-
-    let map = new google.maps.Map(element, {
-        center: pointCoords,
-        zoom: 16
-    });
-
+    let gmap = new Map();
     let marker = new ContentMarker();
 
-    google.maps.event.addListener(map, 'click', function(event) {
+    google.maps.event.addListener(gmap.map, 'click', function(event) {
         const markerCoords = event.latLng;
-        marker.load(map, markerCoords);
+        marker.load(gmap.map, markerCoords);
     });
 });

@@ -4,13 +4,16 @@ const gulpSourcemaps = require('gulp-sourcemaps');
 const server = require('gulp-server-livereload');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
+const watch = require('gulp-watch');
+const batch = require('gulp-batch');
 
 const cssDest = './dist/css';
 const jsDest = './dist/js';
 
 const externalLibs = [
     'node_modules/jquery/dist/jquery.js',
-    'node_modules/bootstrap/dist/js/bootstrap.js'
+    'node_modules/bootstrap/dist/js/bootstrap.js',
+    'node_modules/google-maps/lib/Google.js'
 ];
 const libsFileName = 'libs.js';
 

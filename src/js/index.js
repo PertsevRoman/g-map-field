@@ -47,7 +47,7 @@ class PathStorage {
         for(let i = 1; i < coords.length - 1; ++i) {
             result.push({
                 location: coords[i],
-                stopover: true
+                stopover: false
             });
         }
 

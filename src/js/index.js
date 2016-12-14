@@ -58,14 +58,18 @@ class PathStorage {
         let coords = path.coordsArray;
         let waypoints = this.waypoints(coords);
 
-        console.log(waypoints);
-
         let request = {
             origin: coords[0],
             waypoints,
             destination: coords[coords.length - 1],
             travelMode: google.maps.TravelMode.DRIVING
         };
+
+        for(let coord of path.markers) {
+            coord.marker.addListener('dragend', function () {
+                this.showPath(path);
+            }.bind(this));
+        }
 
         this._directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
@@ -222,6 +226,9 @@ class Map {
 }
 
 class ContentMarker {
+    get marker() {
+        return this._marker;
+    }
     get template() {
         return this._template;
     }

@@ -264,8 +264,12 @@ class ContentMarker {
 
          this._marker = new google.maps.Marker(markerOptions);
 
-         this._marker.addListener('click', function() {
-             infowindow.open(map, marker);
+         this._marker.addListener('mouseover', function() {
+             infowindow.open(map, this._marker);
+         });
+
+         this._marker.addListener('mouseout', function() {
+             infowindow.close();
          });
      }
 }

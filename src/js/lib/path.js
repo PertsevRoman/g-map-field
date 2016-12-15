@@ -69,15 +69,32 @@ export class Path {
         this._dragends.push(handler);
     }
 
+    clear() {
+        for(let mark of this.markers) {
+            mark.marker.setMap(null);
+        }
+
+        this.markers = [];
+    }
+
+    callUpdateHandlers() {
+        for(let handler of this._dragends) {
+            handler();
+        }
+    }
+
+    add(marker) {
+        this.markers.push(marker);
+        marker.marker.addListener('dragend', function () {
+            this.callUpdateHandlers();
+        }.bind(this));
+
+        if(this.markers.length > 1) {
+            this.callUpdateHandlers();
+        }
+    }
+
     constructor(markers) {
         this.markers = markers;
-
-        for(let coord of this.markers) {
-            coord.marker.addListener('dragend', function () {
-                for(let handler of this._dragends) {
-                    handler();
-                }
-            }.bind(this));
-        }
     }
 }

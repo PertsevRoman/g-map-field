@@ -16,10 +16,10 @@ let initApp = function () {
             pathGenerator: null,
             map: null,
             currentPath: new Path([]),
-            renderer: null
+            renderer: null,
+            inEdit: true
         },
         filters: {
-            json: (value) => { return JSON.stringify(value, null, 2) },
             marker: (value) => {
                 let res = '';
 
@@ -32,22 +32,16 @@ let initApp = function () {
         },
         methods: {
             beginPath: function () {
-                this.pathGenerator.start();
+                if(this.currentPath) {
+                    this.currentPath.clear();
+                }
+                
+                this.pathGenerator.start(this.currentPath);
             },
             finishPath: function () {
-                this.pathGenerator.finish(function (path) {
-                    this.currentPath = path;
+                this.pathGenerator.finish();
 
-                    console.log('Визуализация...');
-
-                    this.renderer.render(this.currentPath);
-
-                    this.currentPath.addDragendListener(function () {
-                        this.renderer.render(this.currentPath);
-                    }.bind(this));
-                }.bind(this));
-            },
-            addPoint() {
+                this.renderer.render(this.currentPath);
             },
             toTop: function (index) {
                 this.currentPath.indexDispose(index, -1);
@@ -70,18 +64,21 @@ let initApp = function () {
                 this.pathGenerator = new PathGenerator(this.map);
                 this.renderer = new Renderer(this.map);
 
+                this.currentPath.addDragendListener(function () {
+                    this.renderer.render(this.currentPath);
+                }.bind(this));
+
                 google.maps.event.addListener(this.map.map, 'click', function(event) {
                     const markerCoords = event.latLng;
-
-                    if(this.pathGenerator.inState) {
-                        this.pathGenerator.add(markerCoords);
-                    }
+                    
+                    this.pathGenerator.add(markerCoords);
                 }.bind(this));
             }
         }
     });
 
     app.init();
+    app.beginPath();
 };
 
 document.addEventListener('DOMContentLoaded', function () {

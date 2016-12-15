@@ -23,13 +23,12 @@
         </div>
         <div class="col-lg-4">
             <div class="row">
-                <button v-on:click="beginPath" class="btn btn-default">Создать маршрут</button>
-                <button v-on:click="finishPath" class="btn btn-default">Завершить маршрут</button>
-                <button v-on:click="addPoint" class="btn btn-default">Добавить точку</button>
+                <button v-on:click="beginPath" class="btn btn-default">Очистить маршрут</button>
             </div>
             <div class="row">
                 <ul>
                     <li v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
+                        <input type="text">
                         <h5>{{point.label}} - {{point.coordsStr}}</h5>
                         <button v-on:click="toTop(index)" class="btn btn-default">Вверх</button>
                         <button v-on:click="toDown(index)" class="btn btn-default">Вниз</button>
@@ -39,7 +38,6 @@
             </div>
         </div>
     </div>
-    <pre>{{currentPath.markers | marker}}</pre>
 </div>
 </body>
 </html>

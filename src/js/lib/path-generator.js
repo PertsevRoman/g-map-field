@@ -5,13 +5,6 @@ import {MapMarker} from "./map-marker";
  */
 
 export class PathGenerator {
-    get storage() {
-        return this._storage;
-    }
-
-    set storage(value) {
-        this._storage = value;
-    }
     get counter() {
         return this._counter;
     }
@@ -29,7 +22,6 @@ export class PathGenerator {
     _map;
     _path = [];
     _counter = 1;
-    _storage = null;
 
     constructor(map) {
         if(map) {
@@ -37,46 +29,24 @@ export class PathGenerator {
         }
     }
 
-    get inState() {
-        return this._inState;
-    }
-
-    set inState(value) {
-        if(value) {
-        } else {
-            this._path = [];
-            this.counter = 1;
-        }
-
-        this._inState = value;
-    }
-
-    _inState = false;
     /**
      * Запуск генератора
      */
-    start() {
-        this.inState = true;
+    start(path) {
+        this._path = path;
     }
 
-    finish(callback) {
-        if(this._path.length > 0) {
-            const path = new Path(this._path);
-            callback(path);
-        }
-
-        this.inState = false;
+    finish() {
+        this._path = null;
     }
 
     add(coords) {
-        if(this.inState) {
+        if(this._path) {
             let marker = new MapMarker();
 
-            marker.load(this.map.map, coords, this.counter);
+            marker.load(this.map.map, coords, this._path.markers.length + 1);
 
-            this._path.push(marker);
-
-            this.counter += 1;
+            this._path.add(marker);
         }
     }
 }

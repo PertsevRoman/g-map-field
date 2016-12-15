@@ -28,7 +28,7 @@ let initApp = function () {
                     this.currentPath = path;
 
                     console.log('Визуализация...');
-                    
+
                     this.renderer.render(this.currentPath);
 
                     this.currentPath.addDragendListener(function () {
@@ -39,10 +39,12 @@ let initApp = function () {
             addPoint() {
             },
             toTop: function (label) {
-                this.currentPath.repaint();
+                console.log(label);
+                this.renderer.render(this.currentPath);
             },
             toDown: function (label) {
-                this.currentPath.repaint();
+                console.log(label);
+                this.renderer.render(this.currentPath);
             },
             init: function () {
                 this.map = new GMap('g-maps');

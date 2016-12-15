@@ -60,8 +60,6 @@ export class MapMarker {
         };
 
         if(label) {
-            console.log(label);
-            
             label = label + '';
             
             markerOptions['label'] = label;

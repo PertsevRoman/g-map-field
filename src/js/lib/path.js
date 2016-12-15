@@ -4,7 +4,6 @@
  *
  */
 import {assert as assert} from './utils';
-import {MapMarker} from "./map-marker";
 
 export class Path {
     get markers() {
@@ -16,7 +15,7 @@ export class Path {
     }
         
     _markers = [];
-    _dragends = [];
+    _updateListeners = [];
 
     /**
      * Получение сериализованного массива
@@ -47,12 +46,19 @@ export class Path {
 
         this._markers[s] = this._markers[index];
         this._markers[index] = elem;
+
+        this.callUpdateHandlers();
     }
 
     indexRemove(index) {
         assert(index > -1 && index < this._markers.length);
 
+        let elem = this._markers[index];
+        elem.marker.setMap(null);
+
         this._markers.splice(index, 1);
+
+        this.callUpdateHandlers();
     }
 
     get coordsStr() {
@@ -65,8 +71,8 @@ export class Path {
         return res;
     }
     
-    addDragendListener(handler) {
-        this._dragends.push(handler);
+    addUpdateListener(handler) {
+        this._updateListeners.push(handler);
     }
 
     clear() {
@@ -75,10 +81,12 @@ export class Path {
         }
 
         this.markers = [];
+        
+        this.callUpdateHandlers();
     }
 
     callUpdateHandlers() {
-        for(let handler of this._dragends) {
+        for(let handler of this._updateListeners) {
             handler();
         }
     }
@@ -94,7 +102,19 @@ export class Path {
         }
     }
 
+    refreshLabels() {
+        let index = 1;
+        for(let mark of this.markers) {
+            mark.label = index + '';
+            index += 1;
+        }
+    }
+
     constructor(markers) {
         this.markers = markers;
+
+        this.addUpdateListener(function () {
+            this.refreshLabels();
+        }.bind(this));
     }
 }

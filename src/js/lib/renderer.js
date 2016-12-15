@@ -19,8 +19,6 @@ export default class Renderer {
         this._directionsDisplay = new google.maps.DirectionsRenderer();
         
         this.map = map;
-
-        this._directionsDisplay.setMap(this.map.map);
     }
 
     waypoints(coords) {
@@ -38,6 +36,14 @@ export default class Renderer {
 
     render(path) {
         let coords = path.coordsArray;
+
+        if(coords.length < 2) {
+            this._directionsDisplay.setMap(null);
+            return;
+        }
+
+        this._directionsDisplay.setMap(this.map.map);
+
         let waypoints = this.waypoints(coords);
 
         let request = {

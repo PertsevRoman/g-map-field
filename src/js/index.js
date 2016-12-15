@@ -40,32 +40,27 @@ let initApp = function () {
             },
             finishPath: function () {
                 this.pathGenerator.finish();
-
-                this.renderer.render(this.currentPath);
             },
             toTop: function (index) {
                 this.currentPath.indexDispose(index, -1);
-                this.renderer.render(this.currentPath);
-
-                this.$forceUpdate();
             },
             toDown: function (index) {
                 this.currentPath.indexDispose(index, 1);
-                this.renderer.render(this.currentPath);
-
-                this.$forceUpdate();
             },
             remove: function (index) {
                 this.currentPath.indexRemove(index);
-                this.renderer.render(this.currentPath);
+            },
+            clearPath: function () {
+                this.currentPath.clear();
             },
             init: function () {
                 this.map = new GMap('g-maps');
                 this.pathGenerator = new PathGenerator(this.map);
                 this.renderer = new Renderer(this.map);
 
-                this.currentPath.addDragendListener(function () {
+                this.currentPath.addUpdateListener(function () {
                     this.renderer.render(this.currentPath);
+                    this.$forceUpdate();
                 }.bind(this));
 
                 google.maps.event.addListener(this.map.map, 'click', function(event) {

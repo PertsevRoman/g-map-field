@@ -20,7 +20,14 @@ export class Path {
     /**
      * Получение сериализованного массива
      */
-    get serialization() {
+    get serial() {
+        let serias = this._markers.map(function (mark) {
+            return mark.serial;
+        }).join(',');
+
+        let res = '[' + serias + ']';
+        
+        return res;
     }
 
     get coordsArray() {

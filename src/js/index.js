@@ -53,6 +53,9 @@ let initApp = function () {
             clearPath: function () {
                 this.currentPath.clear();
             },
+            serialize: function () {
+                console.log(this.currentPath.serial);
+            },
             init: function () {
                 this.map = new GMap('g-maps');
                 this.pathGenerator = new PathGenerator(this.map);

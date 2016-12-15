@@ -3,6 +3,13 @@
  */
 
 export class MapMarker {
+    get description() {
+        return this._description;
+    }
+
+    set description(value) {
+        this._description = value;
+    }
     get label() {
         return this._label;
     }
@@ -24,12 +31,23 @@ export class MapMarker {
     set template(value) {
         this._template = value;
     }
+
+    get serial() {
+        let seria = {
+            description: this._description,
+            coords: this.marker.getPosition().toJSON()
+        };
+
+        return JSON.stringify(seria);
+    }
+
     constructor(template) {
         if(template) {
             this.template = template;
         }
     }
 
+    _description = '';
     _marker = null;
     _template = 'content.html';
     _label = '';

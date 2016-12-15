@@ -24,11 +24,12 @@
         <div class="col-lg-4">
             <div class="row">
                 <button v-on:click="clearPath" class="btn btn-default">Очистить маршрут</button>
+                <button v-on:click="serialize" class="btn btn-default">Сериализовать</button>
             </div>
             <div class="row">
                 <ul>
                     <li v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
-                        <input type="text">
+                        <input type="text" v-model="point.description">
                         <h5>{{point.label}} - {{point.coordsStr}}</h5>
                         <button v-on:click="toTop(index)" class="btn btn-default">Вверх</button>
                         <button v-on:click="toDown(index)" class="btn btn-default">Вниз</button>

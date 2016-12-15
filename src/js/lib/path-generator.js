@@ -31,10 +31,9 @@ export class PathGenerator {
     _counter = 1;
     _storage = null;
 
-    constructor(map, storage) {
+    constructor(map) {
         if(map) {
             this.map = map;
-            this.storage = storage;
         }
     }
 
@@ -45,12 +44,6 @@ export class PathGenerator {
     set inState(value) {
         if(value) {
         } else {
-            if(this._path.length > 0) {
-                let path = new Path(this._path);
-
-                this.storage.addPath(path);
-            }
-
             this._path = [];
             this.counter = 1;
         }
@@ -66,7 +59,12 @@ export class PathGenerator {
         this.inState = true;
     }
 
-    finish() {
+    finish(callback) {
+        if(this._path.length > 0) {
+            const path = new Path(this._path);
+            callback(path);
+        }
+
         this.inState = false;
     }
 

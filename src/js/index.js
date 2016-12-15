@@ -4,9 +4,10 @@
  * Получение данных
  */
 
-import {PathStorage} from './lib/path-storage';
 import {PathGenerator} from "./lib/path-generator";
 import {GMap} from "./lib/map";
+import Renderer from "./lib/renderer";
+import {Path} from "./lib/path";
 
 let initApp = function () {
     let app = new Vue({
@@ -14,19 +15,39 @@ let initApp = function () {
         data: {
             pathGenerator: null,
             storage: null,
-            map: null
+            map: null,
+            currentPath: new Path([]),
+            renderer: null
         },
         methods: {
             beginPath: function () {
                 this.pathGenerator.start();
             },
             finishPath: function () {
-                this.pathGenerator.finish();
+                this.pathGenerator.finish(function (path) {
+                    this.currentPath = path;
+
+                    console.log('Визуализация...');
+                    
+                    this.renderer.render(this.currentPath);
+
+                    this.currentPath.addDragendListener(function () {
+                        this.renderer.render(this.currentPath);
+                    }.bind(this));
+                }.bind(this));
+            },
+            addPoint() {
+            },
+            toTop: function (label) {
+                this.currentPath.repaint();
+            },
+            toDown: function (label) {
+                this.currentPath.repaint();
             },
             init: function () {
                 this.map = new GMap('g-maps');
-                this.storage = new PathStorage(this.map);
-                this.pathGenerator = new PathGenerator(this.map, this.storage);
+                this.pathGenerator = new PathGenerator(this.map);
+                this.renderer = new Renderer(this.map);
 
                 google.maps.event.addListener(this.map.map, 'click', function(event) {
                     const markerCoords = event.latLng;

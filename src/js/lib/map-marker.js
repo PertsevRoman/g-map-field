@@ -3,6 +3,13 @@
  */
 
 export class MapMarker {
+    get label() {
+        return this._label;
+    }
+
+    set label(value) {
+        this._label = value;
+    }
     get marker() {
         return this._marker;
     }
@@ -21,12 +28,13 @@ export class MapMarker {
 
     _marker = null;
     _template = 'content.html';
+    _label = '';
 
     getPosition() {
         return this._marker.getPosition();
     }
 
-    load(map, coords, label) {
+    addInfo() {
         let data = document.createElement('div');
 
         $(data).load('src/tpl/' + this.template);
@@ -35,19 +43,6 @@ export class MapMarker {
             content: data
         });
 
-        const markerOptions = {
-            position: coords,
-            map: map,
-            draggable: true
-        };
-
-        if(label) {
-            markerOptions['label'] = label + '';
-        }
-
-
-        this._marker = new google.maps.Marker(markerOptions);
-
         this._marker.addListener('mouseover', function() {
             infowindow.open(map, this._marker);
         });
@@ -55,5 +50,24 @@ export class MapMarker {
         this._marker.addListener('mouseout', function() {
             infowindow.close();
         });
+    }
+
+    load(map, coords, label) {
+        const markerOptions = {
+            position: coords,
+            map: map,
+            draggable: true
+        };
+
+        if(label) {
+            console.log(label);
+            
+            label = label + '';
+            
+            markerOptions['label'] = label;
+            this.label = label;
+        }
+
+        this._marker = new google.maps.Marker(markerOptions);
     }
 }

@@ -19,6 +19,7 @@
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-polyfill": "^6.20.0",
+    "babel-preset-es2017": "^6.16.0",
     "babelify": "^7.3.0",
     "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",

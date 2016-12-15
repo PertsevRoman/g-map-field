@@ -2,9 +2,7 @@
  * Created by joker on 15.12.16.
  */
 
-import {Path} from './path';
-
-export class PathStorage {
+export default class Renderer {
     get map() {
         return this._map;
     }
@@ -12,29 +10,15 @@ export class PathStorage {
     set map(value) {
         this._map = value;
     }
-    get counter() {
-        return this._counter;
-    }
-
-    set counter(value) {
-        this._counter = value;
-    }
-    _counter = 0;
-    _storage = {};
-
-    _directionsService = null;
-    _directionsDisplay = null;
-
+    
     _map = null;
-
-
+    
+    
     constructor(map) {
-        if(map) {
-            this.map = map;
-        }
-
         this._directionsService = new google.maps.DirectionsService();
         this._directionsDisplay = new google.maps.DirectionsRenderer();
+        
+        this.map = map;
 
         this._directionsDisplay.setMap(this.map.map);
     }
@@ -52,7 +36,7 @@ export class PathStorage {
         return result;
     }
 
-    showPath(path) {
+    render(path) {
         let coords = path.coordsArray;
         let waypoints = this.waypoints(coords);
 
@@ -63,26 +47,10 @@ export class PathStorage {
             travelMode: google.maps.TravelMode.DRIVING
         };
 
-        for(let coord of path.markers) {
-            coord.marker.addListener('dragend', function () {
-                this.showPath(path);
-            }.bind(this));
-        }
-
         this._directionsService.route(request, function(response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 this._directionsDisplay.setDirections(response);
             }
         }.bind(this));
-    }
-
-    addPath(path) {
-        if(path instanceof Path) {
-            this._storage[this._counter] = path;
-
-            this.showPath(this._storage[this._counter]);
-
-            this.counter += 1;
-        }
     }
 }

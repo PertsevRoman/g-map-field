@@ -14,6 +14,7 @@ export class Path {
         this._markers = value;
     }
     _markers = [];
+    _dragends = [];
 
     /**
      * Получение сериализованного массива
@@ -28,8 +29,20 @@ export class Path {
 
         return result;
     }
+    
+    addDragendListener(handler) {
+        this._dragends.push(handler);
+    }
 
     constructor(markers) {
         this.markers = markers;
+
+        for(let coord of this.markers) {
+            coord.marker.addListener('dragend', function () {
+                for(let handler of this._dragends) {
+                    handler();
+                }
+            }.bind(this));
+        }
     }
 }

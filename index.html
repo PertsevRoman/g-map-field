@@ -23,12 +23,17 @@
         </div>
         <div class="col-lg-4">
             <div class="row">
-                <button id="create-path" v-on:click="beginPath" class="btn btn-default">Создать маршрут</button>
-                <button id="close-path" v-on:click="finishPath" class="btn btn-default">Завершить маршрут</button>
+                <button v-on:click="beginPath" class="btn btn-default">Создать маршрут</button>
+                <button v-on:click="finishPath" class="btn btn-default">Завершить маршрут</button>
+                <button v-on:click="addPoint" class="btn btn-default">Добавить точку</button>
             </div>
             <div class="row">
                 <ul>
-                    <li v-for=""></li>
+                    <li v-for="point in currentPath.markers">
+                        <h5>{{point.label}}</h5>
+                        <button v-on:click="toTop(point.label)" class="btn btn-default">Вверх</button>
+                        <button v-on:click="toDown(point.label)" class="btn btn-default">Вверх</button>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -31,12 +31,12 @@ let initApp = function () {
             }
         },
         methods: {
-            beginPath: function () {
+            beginPath: function (data) {
                 if(this.currentPath) {
                     this.currentPath.clear();
                 }
                 
-                this.pathGenerator.start(this.currentPath);
+                this.pathGenerator.start(this.currentPath, data);
             },
             finishPath: function () {
                 this.pathGenerator.finish();
@@ -76,7 +76,10 @@ let initApp = function () {
     });
 
     app.init();
-    app.beginPath();
+
+    let data2 = '[{"description":"Первый","position":{"lat":52.61369335506812,"lng":39.597816467285156}},{"description":"Второй","position":{"lat":52.61642931701223,"lng":39.597623348236084}},{"description":"Роман","position":{"lat":52.61519815529511,"lng":39.599586725234985}}]';
+
+    app.beginPath(data2);
 };
 
 document.addEventListener('DOMContentLoaded', function () {

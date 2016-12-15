@@ -35,7 +35,7 @@ export class MapMarker {
     get serial() {
         let seria = {
             description: this._description,
-            coords: this.marker.getPosition().toJSON()
+            position: this.marker.getPosition().toJSON()
         };
 
         return JSON.stringify(seria);

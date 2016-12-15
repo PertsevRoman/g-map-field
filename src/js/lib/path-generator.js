@@ -32,17 +32,33 @@ export class PathGenerator {
     /**
      * Запуск генератора
      */
-    start(path) {
+    start(path, data) {
         this._path = path;
+
+        if(data) {
+            this._path.clear();
+
+            let coords = JSON.parse(data);
+
+            for (let coord of coords) {
+                let pos = coord.position;
+                let latLng  = new google.maps.LatLng(pos);
+                let description = coord.description;
+
+                this.add(latLng, description);
+            }
+        }
     }
 
     finish() {
         this._path = null;
     }
 
-    add(coords) {
+    add(coords, description) {
         if(this._path) {
             let marker = new MapMarker();
+
+            marker.description = description || '';
 
             marker.load(this.map.map, coords, this._path.markers.length + 1);
 

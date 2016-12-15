@@ -16,30 +16,7 @@
 </head>
 <body>
 <div id="app" class="container">
-    <div class="row">
-        <div class="col-lg-8">
-            <div id="g-maps" class="g-maps">
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="row">
-                <button v-on:click="clearPath" class="btn btn-default">Очистить маршрут</button>
-                <button v-on:click="serialize" class="btn btn-default">Сериализовать</button>
-            </div>
-            <div class="row">
-                <ul>
-                    <li v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
-                        <input type="text" v-model="point.description">
-                        <h5>{{point.label}} - {{point.coordsStr}}</h5>
-                        <button v-on:click="toTop(index)" class="btn btn-default">Вверх</button>
-                        <button v-on:click="toDown(index)" class="btn btn-default">Вниз</button>
-                        <button v-on:click="remove(index)" class="btn btn-default">Удалить</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <input type="hidden" v-bind:value="currentPath.serial">
-    </div>
+    <path-input></path-input>
 </div>
 </body>
 </html>

@@ -8,21 +8,29 @@
 
     <script src="dist/js/libs.js" type="text/javascript"></script>
 
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5JRBDJ0fbvh_VDxHreF5B-O9iBzALeLI" type="text/javascript">
     </script>
 
     <script src="dist/js/index.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="container">
+<div id="app" class="container">
     <div class="row">
         <div class="col-lg-8">
             <div id="g-maps" class="g-maps">
             </div>
         </div>
         <div class="col-lg-4">
-            <button id="create-path" class="btn btn-default">Создать маршрут</button>
-            <button id="close-path" class="btn btn-default">Завершить маршрут</button>
+            <div class="row">
+                <button id="create-path" v-on:click="beginPath" class="btn btn-default">Создать маршрут</button>
+                <button id="close-path" v-on:click="finishPath" class="btn btn-default">Завершить маршрут</button>
+            </div>
+            <div class="row">
+                <ul>
+                    <li v-for=""></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

@@ -14,10 +14,21 @@ let initApp = function () {
         el: '#app',
         data: {
             pathGenerator: null,
-            storage: null,
             map: null,
             currentPath: new Path([]),
             renderer: null
+        },
+        filters: {
+            json: (value) => { return JSON.stringify(value, null, 2) },
+            marker: (value) => {
+                let res = '';
+
+                for(let val of value) {
+                    res += val.label + '(' + val.coordsStr + ')\n';
+                }
+
+                return res;
+            }
         },
         methods: {
             beginPath: function () {
@@ -38,12 +49,20 @@ let initApp = function () {
             },
             addPoint() {
             },
-            toTop: function (label) {
-                console.log(label);
+            toTop: function (index) {
+                this.currentPath.indexDispose(index, -1);
                 this.renderer.render(this.currentPath);
+
+                this.$forceUpdate();
             },
-            toDown: function (label) {
-                console.log(label);
+            toDown: function (index) {
+                this.currentPath.indexDispose(index, 1);
+                this.renderer.render(this.currentPath);
+
+                this.$forceUpdate();
+            },
+            remove: function (index) {
+                this.currentPath.indexRemove(index);
                 this.renderer.render(this.currentPath);
             },
             init: function () {

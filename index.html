@@ -29,15 +29,17 @@
             </div>
             <div class="row">
                 <ul>
-                    <li v-for="(point, index) in currentPath.markers">
-                        <h5>{{point.label}}</h5>
+                    <li v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
+                        <h5>{{point.label}} - {{point.coordsStr}}</h5>
                         <button v-on:click="toTop(index)" class="btn btn-default">Вверх</button>
-                        <button v-on:click="toDown(index)" class="btn btn-default">Вверх</button>
+                        <button v-on:click="toDown(index)" class="btn btn-default">Вниз</button>
+                        <button v-on:click="remove(index)" class="btn btn-default">Удалить</button>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+    <pre>{{currentPath.markers | marker}}</pre>
 </div>
 </body>
 </html>

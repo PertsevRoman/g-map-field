@@ -9,6 +9,10 @@ export class MapMarker {
 
     set label(value) {
         this._label = value;
+
+        if(this._marker) {
+            this._marker.setLabel(value);
+        }
     }
     get marker() {
         return this._marker;
@@ -32,6 +36,11 @@ export class MapMarker {
 
     getPosition() {
         return this._marker.getPosition();
+    }
+
+    get coordsStr() {
+        let pos = this.getPosition();
+        return pos.toString();
     }
 
     addInfo() {

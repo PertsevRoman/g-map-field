@@ -3,9 +3,6 @@
     </div>
     <div class="controls">
         <div class="row">
-            <button v-on:click="clearPath" class="btn btn-default">Очистить маршрут</button>
-        </div>
-        <div class="row">
             <ul>
                 <li v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
                     <input type="text" v-model="point.description">

@@ -21,7 +21,6 @@
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2017": "^6.16.0",
     "babelify": "^7.3.0",
-    "bootstrap": "^3.3.7",
     "browserify": "^13.1.1",
     "google-maps": "^3.2.1",
     "gulp-batch": "^1.0.5",
@@ -31,7 +30,6 @@
     "gulp-util": "^3.0.7",
     "gulp-vue-template2js": "^1.0.1",
     "gulp-watch": "^4.3.11",
-    "jquery": "^3.1.1",
     "polyfill": "^0.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"

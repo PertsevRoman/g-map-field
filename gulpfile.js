@@ -18,12 +18,6 @@ const source = require('vinyl-source-stream');
 const cssDest = './dist/css';
 const jsDest = './dist/js';
 
-const externalLibs = [
-    'node_modules/jquery/dist/jquery.js',
-    'node_modules/bootstrap/dist/js/bootstrap.js'
-];
-const libsFileName = 'libs.js';
-
 gulp.task('compile', function() {
     browserify(['./src/js/index.js'], { debug: true })
         .add(require.resolve('./node_modules/babel-polyfill/dist/polyfill'))
@@ -38,12 +32,6 @@ gulp.task('compile', function() {
         .pipe(gulp.dest(jsDest));
 });
 
-gulp.task('concat', function () {
-    gulp.src(externalLibs)
-        .pipe(concat(libsFileName))
-        .pipe(gulp.dest(jsDest));
-});
-
 gulp.task('less', function () {
     gulp
         .src('src/less/base.less')
@@ -53,7 +41,7 @@ gulp.task('less', function () {
         .pipe(gulp.dest(cssDest));
 });
 
-gulp.task('default', ['less', 'compile', 'concat'], function() {
+gulp.task('default', ['less', 'compile'], function() {
 });
 
 gulp.task('watch', function () {

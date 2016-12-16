@@ -3,8 +3,8 @@
     </div>
     <div class="controls">
         <div class="row">
-            <ul>
-                <li v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
+            <ul class="list-group">
+                <li class="list-group-item" v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
                     <input type="text" v-model="point.description">
                     <h5>{{point.label}} - {{point.coordsStr}}</h5>
                     <button v-on:click="toTop(index)" class="btn btn-default">Вверх</button>

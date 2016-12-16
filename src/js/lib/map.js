@@ -16,9 +16,7 @@ export class GMap {
      */
     _map;
 
-    constructor(elementId) {
-        const element = document.getElementById(elementId);
-
+    constructor(element) {
         var pointCoords = {lat: 52.61667, lng: 39.6000};
 
         this._map = new google.maps.Map(element, {

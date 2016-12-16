@@ -60,7 +60,9 @@ Vue.component('path-input', {
             console.log(this.currentPath.serial);
         },
         init: function () {
-            this.map = new GMap('g-maps');
+            let element = this.$el.querySelector('.g-maps');
+
+            this.map = new GMap(element);
             this.pathGenerator = new PathGenerator(this.map);
             this.renderer = new Renderer(this.map);
 

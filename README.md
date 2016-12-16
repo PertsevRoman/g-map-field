@@ -19,4 +19,5 @@ you can use only *src/js/index.js* with resolving dependencies with bower and wr
 
 2) Create vue.js app
 
-3) Add "<path-input field-name="field-name"></path-input>" tag into your form. Form value submitted as *field-name* (JSON encoded).
+3) Add "<path-input field-name="field-name" field-value='json-value'></path-input>" tag into your form. Form value submitted as *field-name* (JSON encoded).
+Value decoded from json format (*json-value*)

@@ -13,10 +13,16 @@ Vue.component('path-input', {
     template: "@src/template.html",
     mounted: function () {
         this.init();
-        this.beginPath();
+        
+        if(this.fieldValue) {
+            this.beginPath(this.fieldValue);
+        } else {
+            this.beginPath();
+        }
     },
     props: [
-        'fieldName'
+        'fieldName',
+        'fieldValue'
     ],
     data: function () {
         return {

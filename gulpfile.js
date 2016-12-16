@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const gulpLess = require('gulp-less');
 const gulpSourcemaps = require('gulp-sourcemaps');
 const server = require('gulp-server-livereload');
 const browserify = require('browserify');
@@ -14,8 +13,6 @@ const util = require('gulp-util');
 const buffer = require('vinyl-buffer');
 const source = require('vinyl-source-stream');
 
-
-const cssDest = './dist/css';
 const jsDest = './dist/js';
 
 gulp.task('compile', function() {
@@ -32,16 +29,7 @@ gulp.task('compile', function() {
         .pipe(gulp.dest(jsDest));
 });
 
-gulp.task('less', function () {
-    gulp
-        .src('src/less/base.less')
-        .pipe(gulpSourcemaps.init())
-        .pipe(gulpLess())
-        .pipe(gulpSourcemaps.write())
-        .pipe(gulp.dest(cssDest));
-});
-
-gulp.task('default', ['less', 'compile'], function() {
+gulp.task('default', ['compile'], function() {
 });
 
 gulp.task('watch', function () {
@@ -51,7 +39,7 @@ gulp.task('watch', function () {
 });
 
 gulp.task('webserver', ['watch'], function () {
-    gulp.src('.')
+    gulp.src('./example/')
         .pipe(server({
             livereload: {
                 enable: true,
@@ -63,7 +51,9 @@ gulp.task('webserver', ['watch'], function () {
                     )
                 }
             },
-            directoryListing: true,
+            directoryListing: {
+                directory: './example/'
+            },
             open: true,
             defaultFile: 'index.html'
         }));

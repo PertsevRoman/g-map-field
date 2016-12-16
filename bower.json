@@ -1,0 +1,20 @@
+{
+  "name": "g-map-field",
+  "version": "0.0.1",
+  "authors": [
+    "Pertsev Roman <pertsev.roman@gmail.com>"
+  ],
+  "description": "g-map-field - incapsulation map field for (powered by vue.js)",
+  "main": "dist/js/index.js",
+  "moduleType": [
+    "amd",
+    "es6"
+  ],
+  "keywords": [
+    "google-maps",
+    "vue.js",
+    "es6",
+    "gulp"
+  ],
+  "license": "MIT"
+}

@@ -15,6 +15,9 @@ Vue.component('path-input', {
         this.init();
         this.beginPath();
     },
+    props: [
+        'fieldName'
+    ],
     data: function () {
         return {
             pathGenerator: null,

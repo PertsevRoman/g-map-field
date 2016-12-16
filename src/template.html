@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="col-lg-8">
         <div id="g-maps" class="g-maps">
         </div>
@@ -19,5 +19,5 @@
             </ul>
         </div>
     </div>
-    <input type="hidden" v-bind:value="currentPath.serial">
+    <input type="hidden" v-bind:name="fieldName" v-bind:value="currentPath.serial">
 </div>

@@ -13,7 +13,7 @@ Vue.component('path-input', {
     template: "@src/template.html",
     mounted: function () {
         this.init();
-        
+
         if(this.fieldValue) {
             this.beginPath(this.fieldValue);
         } else {
@@ -76,14 +76,4 @@ Vue.component('path-input', {
             }.bind(this));
         }
     }
-});
-
-let initApp = function () {
-    let app = new Vue({
-        el: '#app'
-    });
-};
-
-document.addEventListener('DOMContentLoaded', function () {
-    initApp();
 });

@@ -10,6 +10,7 @@
     "amd",
     "es6"
   ],
+  "ignore": "index.html",
   "keywords": [
     "google-maps",
     "vue.js",

@@ -23,5 +23,7 @@ export class GMap {
             center: pointCoords,
             zoom: 16
         });
+
+        google.maps.event.trigger(this._map, 'resize');
     }
 }

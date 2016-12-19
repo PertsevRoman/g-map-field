@@ -8,9 +8,9 @@
                     <div class="input-group">
                         <input class="form-control" type="text" v-model="point.description">
                         <span class="input-group-btn">
-                            <button v-on:click="toTop(index)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-up"></i></button>
-                            <button v-on:click="toDown(index)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-down"></i></button>
-                            <button v-on:click="remove(index)" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></button>
+                            <a v-on:click="toTop(index)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                            <a v-on:click="toDown(index)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                            <a v-on:click="remove(index)" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></a>
                         </span>
                     </div>
                 </li>

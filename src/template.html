@@ -5,11 +5,14 @@
         <div class="row">
             <ul class="list-group">
                 <li class="list-group-item" v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
-                    <input type="text" v-model="point.description">
-                    <h5>{{point.label}} - {{point.coordsStr}}</h5>
-                    <button v-on:click="toTop(index)" class="btn btn-default">Вверх</button>
-                    <button v-on:click="toDown(index)" class="btn btn-default">Вниз</button>
-                    <button v-on:click="remove(index)" class="btn btn-default">Удалить</button>
+                    <div class="input-group">
+                        <input type="text" v-model="point.description">
+                        <span class="input-group-btn">
+                            <button v-on:click="toTop(index)" class="btn btn-default">Вверх</button>
+                            <button v-on:click="toDown(index)" class="btn btn-default">Вниз</button>
+                            <button v-on:click="remove(index)" class="btn btn-default">Удалить</button>
+                        </span>
+                    </div>
                 </li>
             </ul>
         </div>

@@ -4,6 +4,6 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     let post = new Vue({
-        el: '#post'
+        el: '#app'
     });
 });

@@ -3,19 +3,35 @@
     </div>
     <div class="controls">
         <div class="row">
-            <ul class="list-group">
-                <li class="list-group-item" v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
-                    <div class="input-group">
-                        <span class = "input-group-addon">{{point.label}}</span>
-                        <input class="form-control" type="text" v-model="point.description">
-                        <span class="input-group-btn">
-                            <a v-on:click="toTop(index)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-up"></i></a>
-                            <a v-on:click="toDown(index)" class="btn btn-default"><i class="glyphicon glyphicon-arrow-down"></i></a>
-                            <a v-on:click="remove(index)" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i></a>
-                        </span>
+                <div v-for="(point, index) in currentPath.markers" :key="point.coordsStr">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="input-group pull-left">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" v-model="point.visible" v-on:change="currentPath.callUpdateHandlers()" />
+                                                Видимая
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group pull-right">
+                                        <a v-on:click="toTop(index)" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-arrow-up"></i></a>
+                                        <a v-on:click="toDown(index)" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-arrow-down"></i></a>
+                                        <a v-on:click="remove(index)" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-remove"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-if="point.visible" class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">{{point.label}}</span>
+                                <input class="form-control" type="text" v-model="point.description">
+                            </div>
+                        </div>
                     </div>
-                </li>
-            </ul>
+                </div>
         </div>
     </div>
     <input type="hidden" v-bind:name="fieldName" v-bind:value="currentPath.serial">

@@ -38,14 +38,10 @@ export class PathGenerator {
         if(data) {
             this._path.clear();
 
-            let coords = JSON.parse(data);
+            let markersArray = JSON.parse(data);
 
-            for (let coord of coords) {
-                let pos = coord.position;
-                let latLng  = new google.maps.LatLng(pos);
-                let description = coord.description;
-
-                this.add(latLng, description);
+            for (let markerJson of markersArray) {
+                this.add(markerJson);
             }
         }
     }
@@ -54,13 +50,13 @@ export class PathGenerator {
         this._path = null;
     }
 
-    add(coords, description) {
+    add(markerJson) {
         if(this._path) {
-            let marker = new MapMarker();
-
-            marker.description = description || '';
-
-            marker.load(this.map.map, coords, this._path.markers.length + 1);
+            let marker = new MapMarker(this.map, markerJson.position);
+            
+            markerJson.label = this._path.markers.length + 1;
+            
+            marker.serial = markerJson;
 
             this._path.add(marker);
         }

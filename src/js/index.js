@@ -84,7 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         google.maps.event.addListener(this.map.map, 'click', function(event) {
                             const markerCoords = event.latLng;
 
-                            this.pathGenerator.add(markerCoords);
+                            this.pathGenerator.add({
+                                position: markerCoords.toJSON()
+                            });
                         }.bind(this));
                     }
                 }

@@ -3,6 +3,22 @@
  */
 
 export class MapMarker {
+    get map() {
+        return this._map;
+    }
+
+    set map(value) {
+        this._map = value;
+        this.marker.setMap(value.map);
+    }
+    get latLng() {
+        return this._latLng;
+    }
+
+    set latLng(value) {
+        this._latLng = value;
+        this.marker.setPosition(value);
+    }
     get visible() {
         return this._marker.getVisible();
     }
@@ -42,24 +58,59 @@ export class MapMarker {
 
     get serial() {
         let seria = {
-            description: this._description,
-            position: this.marker.getPosition().toJSON()
+            description: this.description,
+            position: this.marker.getPosition().toJSON(),
+            visible: this.visible
         };
 
         return JSON.stringify(seria);
     }
+    
+    remove() {
+        this.marker.setMap(null);
+    }
 
-    constructor(template) {
+    set serial(value) {
+        let pos = value.position;
+
+        this.latLng = new google.maps.LatLng(pos);
+        this.description = value.description || '';
+        if(value.label) {
+            this.label = value.label + '';
+        }
+        this.visible = value.visible || true;
+        
+        this.marker.setPosition(this.latLng);
+        this.marker.setLabel(this.label);
+        this.marker.setVisible(this.visible);
+    }
+
+    constructor(map, coords, template) {
+        if(!map) {
+            throw 'Не определена карта';
+        }
+
+        this._marker = new google.maps.Marker({
+            map: map.map,
+            position: coords,
+            draggable: true
+        });
+        
+        this.map = map;
+
         if(template) {
             this.template = template;
         }
     }
 
+    _map = null;
+    _latLng = {};
     _description = '';
     _marker = null;
     _template = 'content.html';
     _label = '';
     _visible = true;
+
 
     getPosition() {
         return this._marker.getPosition();
@@ -86,22 +137,5 @@ export class MapMarker {
         this._marker.addListener('mouseout', function() {
             infowindow.close();
         });
-    }
-
-    load(map, coords, label) {
-        const markerOptions = {
-            position: coords,
-            map: map,
-            draggable: true
-        };
-
-        if(label) {
-            label = label + '';
-            
-            markerOptions['label'] = label;
-            this.label = label;
-        }
-
-        this._marker = new google.maps.Marker(markerOptions);
     }
 }

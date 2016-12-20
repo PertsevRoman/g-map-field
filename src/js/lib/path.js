@@ -112,8 +112,10 @@ export class Path {
     refreshLabels() {
         let index = 1;
         for(let mark of this.markers) {
-            mark.label = index + '';
-            index += 1;
+            if(mark.visible) {
+                mark.label = index + '';
+                index += 1;
+            }
         }
     }
 

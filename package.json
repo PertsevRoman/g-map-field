@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "ignore": [ "example" ],
   "author": "Roman Pertsev <pertsev.roman@gmail.com>",
   "license": "ISC",
   "devDependencies": {
@@ -28,7 +29,6 @@
     "gulp-concat": "^2.6.1",
     "gulp-server-livereload": "^1.9.2",
     "gulp-util": "^3.0.7",
-    "gulp-vue-template2js": "^1.0.1",
     "gulp-watch": "^4.3.11",
     "polyfill": "^0.1.0",
     "vinyl-buffer": "^1.0.0",

@@ -6,7 +6,6 @@ const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const watch = require('gulp-watch');
 const batch = require('gulp-batch');
-const tpl2js = require('gulp-vue-template2js');
 
 const babelify= require('babelify');
 const util = require('gulp-util');
@@ -25,7 +24,6 @@ gulp.task('compile', function() {
         .pipe(buffer())
         .pipe(gulpSourcemaps.init({loadMaps: true}))
         .pipe(gulpSourcemaps.write('./'))
-        .pipe(tpl2js())
         .pipe(gulp.dest(jsDest));
 });
 

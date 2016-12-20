@@ -3,6 +3,14 @@
  */
 
 export class MapMarker {
+    get visible() {
+        return this._marker.getVisible();
+    }
+
+    set visible(value) {
+        this._marker.setVisible(value);
+        this._visible = value;
+    }
     get description() {
         return this._description;
     }
@@ -51,6 +59,7 @@ export class MapMarker {
     _marker = null;
     _template = 'content.html';
     _label = '';
+    _visible = true;
 
     getPosition() {
         return this._marker.getPosition();

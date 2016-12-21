@@ -37,6 +37,10 @@ export class Path {
 
         return result;
     }
+    
+    get size() {
+        return this._markers.length;
+    }
 
     /**
      * Смена позиции индекса

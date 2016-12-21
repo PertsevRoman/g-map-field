@@ -10,14 +10,19 @@ Google Maps path form field with json serialization
 
 3) Run "gulp default"
 
-4) Common library file compiled into *src/js/index.js*, dependencies compiles into *src/js/libs.js*, styles - *src/css/base.css*.
-you can use only *src/js/index.js* with resolving dependencies with bower and write your own styles
+4) Common library file compiled into *dist/js/index.js*.
 
 # Usage
 
-1) Link dependencies (vue.js required, bootstrap optional)
+1) Link dependencies (vue.js required, bootstrap required)
 
-2) Create vue.js app
+2) Add "<path-input field-name="field-name" field-value='json-value' template="template-path" ></path-input>"
+tag into your form. Form value submitted as *field-name* (JSON encoded). Template *template-path* used for component
+template (template url rendering not suppurted by vue.js, this is own functional)
 
-3) Add "<path-input field-name="field-name" field-value='json-value'></path-input>" tag into your form. Form value submitted as *field-name* (JSON encoded).
 Value decoded from json format (*json-value*)
+
+3) Create vue.js app
+
+# Notes
+For *bootstrap-timepicker* plugin css styles not included, only less. You can compile less and include result css in your project

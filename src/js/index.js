@@ -46,6 +46,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         inEdit: true
                     };
                 },
+                updated: function () {
+                    let size = this.currentPath.size;
+                    const selector = 'input[date-time="dt-' + size + '"]';
+                    const pickerAnchor = $(selector);
+
+                    pickerAnchor.timepicker({
+                        showMeridian: false
+                    });
+                },
                 methods: {
                     beginPath: function (data) {
                         if(this.currentPath) {

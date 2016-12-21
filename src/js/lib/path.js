@@ -38,6 +38,12 @@ export class Path {
         return result;
     }
     
+    pointValue(index, field, value) {
+        assert(index > -1 && index < this._markers.length);
+        
+        this._markers[index][field] = value;
+    }
+    
     get size() {
         return this._markers.length;
     }

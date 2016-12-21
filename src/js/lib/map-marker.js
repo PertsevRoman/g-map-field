@@ -3,6 +3,13 @@
  */
 
 export class MapMarker {
+    get time() {
+        return this._time;
+    }
+
+    set time(value) {
+        this._time = value;
+    }
     get map() {
         return this._map;
     }
@@ -60,7 +67,8 @@ export class MapMarker {
         let seria = {
             description: this.description,
             position: this.marker.getPosition().toJSON(),
-            visible: this.visible
+            visible: this.visible,
+            time: this.time
         };
 
         return JSON.stringify(seria);
@@ -79,7 +87,8 @@ export class MapMarker {
             this.label = value.label + '';
         }
         this.visible = value.visible || true;
-        
+        this.time = value.time || '0:00';
+
         this.marker.setPosition(this.latLng);
         this.marker.setLabel(this.label);
         this.marker.setVisible(this.visible);
@@ -103,6 +112,7 @@ export class MapMarker {
         }
     }
 
+    _time = '';
     _map = null;
     _latLng = {};
     _description = '';

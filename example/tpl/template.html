@@ -25,13 +25,19 @@
                             </div>
                         </div>
                         <div v-if="point.visible" class="panel-body">
-                            <div class="input-group">
-                                <span class="input-group-addon">{{point.label}}</span>
-                                <input class="form-control" type="text" v-model="point.description">
-                            </div>
-                            <div class="input-group bootstrap-timepicker timepicker">
-                                <input type="text" placeholder="Время" v-bind:date-time="'dt-' + (index + 1)"  class="form-control input-small" />
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">{{point.label}}</span>
+                                        <input class="form-control" type="text" v-model="point.description">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="input-group bootstrap-timepicker timepicker">
+                                        <input type="text" placeholder="Время" v-model="point.time" v-bind:data-index="index" v-bind:date-time="'dt-' + index"  class="form-control input-small" />
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

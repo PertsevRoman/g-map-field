@@ -47,13 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     };
                 },
                 updated: function () {
-                    let size = this.currentPath.size;
-                    const selector = 'input[date-time="dt-' + size + '"]';
-                    const pickerAnchor = $(selector);
-
-                    pickerAnchor.timepicker({
-                        showMeridian: false
-                    });
                 },
                 methods: {
                     beginPath: function (data) {
@@ -93,9 +86,28 @@ document.addEventListener('DOMContentLoaded', function () {
                         google.maps.event.addListener(this.map.map, 'click', function(event) {
                             const markerCoords = event.latLng;
 
+                            const elemPosition = this.currentPath.size;
+                            
                             this.pathGenerator.add({
                                 position: markerCoords.toJSON()
                             });
+
+                            this.$forceUpdate();
+
+                            setTimeout(function () {
+                                const selector = 'input[date-time="dt-' + elemPosition + '"]';
+                                const pickerAnchor = $(selector);
+
+                                pickerAnchor.timepicker({
+                                    showMeridian: false
+                                }).on('changeTime.timepicker', function (e) {
+
+                                    const value = e.time.value;
+                                    let index = pickerAnchor.attr('data-index');
+                                    
+                                    this.currentPath.pointValue(index, 'time', value);
+                                }.bind(this));
+                            }.bind(this), 500);
                         }.bind(this));
                     }
                 }

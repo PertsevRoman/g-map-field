@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     let templateName = componentAnchor.getAttribute('template');
+    let fieldValue = componentAnchor.getAttribute('field-value');
+    let fieldName = componentAnchor.getAttribute('field-name');
 
     $.get(templateName, function (data) {
         try {
@@ -26,24 +28,23 @@ document.addEventListener('DOMContentLoaded', function () {
                 template: data,
                 mounted: function () {
                     this.init();
+                    
+                    this.fieldName = fieldName;
 
-                    if(this.fieldValue) {
-                        this.beginPath(this.fieldValue);
+                    if(fieldValue) {
+                        this.beginPath(fieldValue);
                     } else {
                         this.beginPath();
                     }
                 },
-                props: [
-                    'fieldName',
-                    'fieldValue'
-                ],
                 data: function () {
                     return {
                         pathGenerator: null,
                         map: null,
                         currentPath: new Path([]),
                         renderer: null,
-                        inEdit: true
+                        inEdit: true,
+                        fieldName: ''
                     };
                 },
                 updated: function () {
@@ -83,31 +84,32 @@ document.addEventListener('DOMContentLoaded', function () {
                             this.$forceUpdate();
                         }.bind(this));
 
+                        this.pathGenerator.appendAddListener(function () {
+                            const elemPosition = this.currentPath.size;
+
+                            setTimeout(function () {
+                                const selector = 'input[date-time="dt-' + (elemPosition - 1) + '"]';
+                                const pickerAnchor = $(selector);
+
+                                pickerAnchor.timepicker({
+                                    showMeridian: false
+                                }).on('changeTime.timepicker', function (e) {
+                                    const value = e.time.value;
+                                    let index = pickerAnchor.attr('data-index');
+
+                                    this.currentPath.pointValue(index, 'time', value);
+                                }.bind(this));
+                            }.bind(this), 500);
+                        }.bind(this));
+
                         google.maps.event.addListener(this.map.map, 'click', function(event) {
                             const markerCoords = event.latLng;
-
-                            const elemPosition = this.currentPath.size;
                             
                             this.pathGenerator.add({
                                 position: markerCoords.toJSON()
                             });
 
                             this.$forceUpdate();
-
-                            setTimeout(function () {
-                                const selector = 'input[date-time="dt-' + elemPosition + '"]';
-                                const pickerAnchor = $(selector);
-
-                                pickerAnchor.timepicker({
-                                    showMeridian: false
-                                }).on('changeTime.timepicker', function (e) {
-
-                                    const value = e.time.value;
-                                    let index = pickerAnchor.attr('data-index');
-                                    
-                                    this.currentPath.pointValue(index, 'time', value);
-                                }.bind(this));
-                            }.bind(this), 500);
                         }.bind(this));
                     }
                 }

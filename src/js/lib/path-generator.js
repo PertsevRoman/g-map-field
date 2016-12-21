@@ -22,6 +22,7 @@ export class PathGenerator {
     _map;
     _path = [];
     _counter = 1;
+    _addedListeners = []; 
 
     constructor(map) {
         if(map) {
@@ -49,16 +50,24 @@ export class PathGenerator {
     finish() {
         this._path = null;
     }
+    
+    appendAddListener(handler) {
+        this._addedListeners.push(handler);
+    }
 
     add(markerJson) {
         if(this._path) {
             let marker = new MapMarker(this.map, markerJson.position);
-            
+
             markerJson.label = this._path.markers.length + 1;
-            
+
             marker.serial = markerJson;
 
             this._path.add(marker);
+            
+            for(let handler of this._addedListeners) {
+                handler();
+            }
         }
     }
 }

@@ -38,12 +38,10 @@
                                                 <span class="caret"></span>
                                             </span>
                                             <div class="dropdown-menu pull-right">
-                                                <div>
-                                                    <div v-for="(val, key) in icons" v-on:click="point.icon = val">
-                                                        <span v-bind:class="'flag-icon flag-icon-' + key">
-                                                        </span>
-                                                        <span>{{key}}</span>
-                                                    </div>
+                                                <div class="map-icon" v-for="icon in icons" v-on:click="point.icon = icon.icon">
+                                                    <span v-bind:class="'flag-icon flag-icon-' + icon.code">
+                                                    </span>
+                                                    <span>{{icon.label}}</span>
                                                 </div>
                                             </div>
                                         </span>

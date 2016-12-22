@@ -15,6 +15,9 @@ const iconsMap = {
 };
 
 export class MapMarker {
+    get icon() {
+        return this._icon;
+    }
     get time() {
         return this._time;
     }
@@ -50,7 +53,9 @@ export class MapMarker {
         return this._description;
     }
 
-    setIcon(path) {
+    set icon(path) {
+        this._icon = path;
+
         let icon = {
             url: path,
             anchor: new google.maps.Point(25,50),
@@ -94,7 +99,8 @@ export class MapMarker {
             description: this.description,
             position: this.marker.getPosition().toJSON(),
             visible: this.visible,
-            time: this.time
+            time: this.time,
+            icon: this.icon
         };
 
         return JSON.stringify(seria);
@@ -114,6 +120,7 @@ export class MapMarker {
         }
         this.visible = value.visible || true;
         this.time = value.time || '0:00';
+        this.icon = value.icon || '';
 
         this.marker.setPosition(this.latLng);
         this.marker.setLabel(this.label);
@@ -146,6 +153,7 @@ export class MapMarker {
     _template = 'content.html';
     _label = '';
     _visible = true;
+    _icon = '';
 
 
     getPosition() {

@@ -5,6 +5,13 @@ import {MapMarker} from "./map-marker";
  */
 
 export class PathGenerator {
+    get defaultIcon() {
+        return this._defaultIcon;
+    }
+
+    set defaultIcon(value) {
+        this._defaultIcon = value;
+    }
     get counter() {
         return this._counter;
     }
@@ -22,7 +29,8 @@ export class PathGenerator {
     _map;
     _path = [];
     _counter = 1;
-    _addedListeners = []; 
+    _addedListeners = [];
+    _defaultIcon = '';
 
     constructor(map) {
         if(map) {
@@ -62,6 +70,10 @@ export class PathGenerator {
             markerJson.label = this._path.markers.length + 1;
 
             marker.serial = markerJson;
+
+            if(marker.icon === '') {
+                marker.icon = this.defaultIcon;
+            }
 
             this._path.add(marker);
             

@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 this.currentPath.clear();
                             }
 
+                            this.pathGenerator.defaultIcon = icons[0].icon;
                             this.pathGenerator.start(this.currentPath, data);
                         },
                         finishPath: function () {

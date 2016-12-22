@@ -8,6 +8,7 @@ import {PathGenerator} from "./lib/path-generator";
 import {GMap} from "./lib/map";
 import Renderer from "./lib/renderer";
 import {Path} from "./lib/path";
+import {MapMarker} from "./lib/map-marker";
 
 const componentName = 'path-input';
 
@@ -46,6 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         inEdit: true,
                         fieldName: ''
                     };
+                },
+                computed: {
+                    icons: function () {
+                        return MapMarker.icons;
+                    }
                 },
                 updated: function () {
                 },

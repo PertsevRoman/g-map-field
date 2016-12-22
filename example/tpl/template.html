@@ -30,6 +30,22 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">{{point.label}}</span>
                                         <input class="form-control" type="text" v-model="point.description">
+                                        <span class="input-group-addon">
+                                            @
+                                        </span>
+                                        <span class="input-group-addon">
+                                            <span class="dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                            </span>
+                                            <div class="dropdown-menu pull-right">
+                                                <div>
+                                                    <div v-for="(val, key) in icons" v-on:click="point.setIcon(val)">
+                                                        <div  v-bind:class="'flag-icon flag-icon-' + key">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

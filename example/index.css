@@ -20,4 +20,6 @@
     padding: 3px;
 }
 
-.map-icon
+.pt-icon {
+    max-height: 1.4em;
+}

@@ -43,13 +43,13 @@ export class MapMarker {
     set icon(path) {
         this._icon = path;
 
-        let icon = {
-            url: path,
-            anchor: new google.maps.Point(25,50),
-            scaledSize: new google.maps.Size(50,50)
-        };
-
-        this._marker.setIcon(icon);
+        // let icon = {
+        //     url: path,
+        //     anchor: new google.maps.Point(25,50),
+        //     scaledSize: new google.maps.Size(50,50)
+        // };
+        //
+        // this._marker.setIcon(icon);
     }
 
     set description(value) {

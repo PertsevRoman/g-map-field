@@ -74,6 +74,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         remove: function (index) {
                             this.currentPath.indexRemove(index);
                         },
+                        center: function (point) {
+                            let latLng = point.latLng;
+
+                            this.map.map.setCenter(latLng);
+                        },
                         clearPath: function () {
                             this.currentPath.clear();
                         },

@@ -1,19 +1,6 @@
 /**
  * Created by joker on 15.12.16.
  */
-
-const iconsMap = {
-    ad: "/bower_components/flag-icon-css/flags/1x1/ad.svg",
-    ae: "/bower_components/flag-icon-css/flags/1x1/ae.svg",
-    af: "/bower_components/flag-icon-css/flags/1x1/af.svg",
-    ag: "/bower_components/flag-icon-css/flags/1x1/ag.svg",
-    ai: "/bower_components/flag-icon-css/flags/1x1/ai.svg",
-    al: "/bower_components/flag-icon-css/flags/1x1/al.svg",
-    am: "/bower_components/flag-icon-css/flags/1x1/am.svg",
-    ao: "/bower_components/flag-icon-css/flags/1x1/ao.svg",
-    au: "/bower_components/flag-icon-css/flags/1x1/au.svg"
-};
-
 export class MapMarker {
     get icon() {
         return this._icon;
@@ -63,10 +50,6 @@ export class MapMarker {
         };
 
         this._marker.setIcon(icon);
-    }
-
-    static get icons() {
-        return iconsMap;
     }
 
     set description(value) {

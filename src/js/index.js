@@ -8,7 +8,6 @@ import {PathGenerator} from "./lib/path-generator";
 import {GMap} from "./lib/map";
 import Renderer from "./lib/renderer";
 import {Path} from "./lib/path";
-import {MapMarker} from "./lib/map-marker";
 
 const componentName = 'path-input';
 
@@ -22,108 +21,109 @@ document.addEventListener('DOMContentLoaded', function () {
     let templateName = componentAnchor.getAttribute('template');
     let fieldValue = componentAnchor.getAttribute('field-value');
     let fieldName = componentAnchor.getAttribute('field-name');
+    let iconsResource = componentAnchor.getAttribute('icons-resource');
 
-    $.get(templateName, function (data) {
-        try {
-            let Prof = Vue.extend({
-                template: data,
-                mounted: function () {
-                    this.init();
-                    
-                    this.fieldName = fieldName;
+    $.get(iconsResource, function (icons) {
+        $.get(templateName, function (data) {
+            try {
+                let Prof = Vue.extend({
+                    template: data,
+                    mounted: function () {
+                        this.init();
 
-                    if(fieldValue) {
-                        this.beginPath(fieldValue);
-                    } else {
-                        this.beginPath();
-                    }
-                },
-                data: function () {
-                    return {
-                        pathGenerator: null,
-                        map: null,
-                        currentPath: new Path([]),
-                        renderer: null,
-                        inEdit: true,
-                        fieldName: ''
-                    };
-                },
-                computed: {
-                    icons: function () {
-                        return MapMarker.icons;
-                    }
-                },
-                updated: function () {
-                },
-                methods: {
-                    beginPath: function (data) {
-                        if(this.currentPath) {
-                            this.currentPath.clear();
+                        this.fieldName = fieldName;
+
+                        if(fieldValue) {
+                            this.beginPath(fieldValue);
+                        } else {
+                            this.beginPath();
                         }
-
-                        this.pathGenerator.start(this.currentPath, data);
                     },
-                    finishPath: function () {
-                        this.pathGenerator.finish();
+                    data: function () {
+                        return {
+                            pathGenerator: null,
+                            map: null,
+                            currentPath: new Path([]),
+                            renderer: null,
+                            inEdit: true,
+                            fieldName: ''
+                        };
                     },
-                    toTop: function (index) {
-                        this.currentPath.indexDispose(index, -1);
+                    computed: {
+                        icons: function () {
+                            return icons;
+                        }
                     },
-                    toDown: function (index) {
-                        this.currentPath.indexDispose(index, 1);
-                    },
-                    remove: function (index) {
-                        this.currentPath.indexRemove(index);
-                    },
-                    clearPath: function () {
-                        this.currentPath.clear();
-                    },
-                    init: function () {
-                        let element = this.$el.querySelector('.g-maps');
+                    methods: {
+                        beginPath: function (data) {
+                            if(this.currentPath) {
+                                this.currentPath.clear();
+                            }
 
-                        this.map = new GMap(element);
-                        this.pathGenerator = new PathGenerator(this.map);
-                        this.renderer = new Renderer(this.map);
+                            this.pathGenerator.start(this.currentPath, data);
+                        },
+                        finishPath: function () {
+                            this.pathGenerator.finish();
+                        },
+                        toTop: function (index) {
+                            this.currentPath.indexDispose(index, -1);
+                        },
+                        toDown: function (index) {
+                            this.currentPath.indexDispose(index, 1);
+                        },
+                        remove: function (index) {
+                            this.currentPath.indexRemove(index);
+                        },
+                        clearPath: function () {
+                            this.currentPath.clear();
+                        },
+                        init: function () {
+                            let element = this.$el.querySelector('.g-maps');
 
-                        this.currentPath.addUpdateListener(function () {
-                            this.renderer.render(this.currentPath);
-                            this.$forceUpdate();
-                        }.bind(this));
+                            this.map = new GMap(element);
+                            this.pathGenerator = new PathGenerator(this.map);
+                            this.renderer = new Renderer(this.map);
 
-                        this.pathGenerator.appendAddListener(function () {
-                            const elemPosition = this.currentPath.size;
+                            this.currentPath.addUpdateListener(function () {
+                                this.renderer.render(this.currentPath);
+                                this.$forceUpdate();
+                            }.bind(this));
 
-                            setTimeout(function () {
-                                const selector = 'input[date-time="dt-' + (elemPosition - 1) + '"]';
-                                const pickerAnchor = $(selector);
+                            this.pathGenerator.appendAddListener(function () {
+                                const elemPosition = this.currentPath.size;
 
-                                pickerAnchor.timepicker({
-                                    showMeridian: false
-                                }).on('changeTime.timepicker', function (e) {
-                                    const value = e.time.value;
-                                    let index = pickerAnchor.attr('data-index');
+                                setTimeout(function () {
+                                    const selector = 'input[date-time="dt-' + (elemPosition - 1) + '"]';
+                                    const pickerAnchor = $(selector);
 
-                                    this.currentPath.pointValue(index, 'time', value);
-                                }.bind(this));
-                            }.bind(this), 500);
-                        }.bind(this));
+                                    pickerAnchor.timepicker({
+                                        showMeridian: false
+                                    }).on('changeTime.timepicker', function (e) {
+                                        const value = e.time.value;
+                                        let index = pickerAnchor.attr('data-index');
 
-                        google.maps.event.addListener(this.map.map, 'click', function(event) {
-                            const markerCoords = event.latLng;
-                            
-                            this.pathGenerator.add({
-                                position: markerCoords.toJSON()
-                            });
+                                        this.currentPath.pointValue(index, 'time', value);
+                                    }.bind(this));
+                                }.bind(this), 500);
+                            }.bind(this));
 
-                            this.$forceUpdate();
-                        }.bind(this));
+                            google.maps.event.addListener(this.map.map, 'click', function(event) {
+                                const markerCoords = event.latLng;
+
+                                this.pathGenerator.add({
+                                    position: markerCoords.toJSON()
+                                });
+
+                                this.$forceUpdate();
+                            }.bind(this));
+                        }
                     }
-                }
-            });
+                });
 
-            new Prof().$mount(componentName);
-        } catch (error) {
-            console.log('Не удается определить компонент: Vue.js не инициализирован');
-        }
+                new Prof().$mount(componentName);
+            } catch (error) {
+                console.log('Не удается определить компонент: Vue.js не инициализирован');
+            }
+        });
     });
 });

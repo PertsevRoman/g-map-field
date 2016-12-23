@@ -15,8 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let componentAnchor = document.getElementsByTagName(componentName)[0];
 
     if(componentAnchor == null) {
+        console.log('Component tag not founded');
         return;
     }
+    
     
     let templateName = componentAnchor.getAttribute('template');
     let fieldValue = componentAnchor.getAttribute('field-value');

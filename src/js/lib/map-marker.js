@@ -101,7 +101,13 @@ export class MapMarker {
         if(value.label) {
             this.label = value.label + '';
         }
-        this.visible = value.visible || true;
+        
+        if(typeof value.visible === 'boolean') {
+            this.visible = value.visible;
+        } else {
+            this.visible = true;
+        }
+
         this.time = value.time || '0:00';
         this.icon = value.icon || '';
 

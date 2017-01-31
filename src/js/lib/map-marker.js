@@ -2,6 +2,13 @@
  * Created by joker on 15.12.16.
  */
 export class MapMarker {
+    get draggable() {
+        return this._marker.getDraggable();
+    }
+
+    set draggable(value) {
+        this._marker.setDraggable(value);
+    }
     get icon() {
         return this._icon;
     }
@@ -83,7 +90,8 @@ export class MapMarker {
             position: this.marker.getPosition().toJSON(),
             visible: this.visible,
             time: this.time,
-            icon: this.icon
+            icon: this.icon,
+            draggable: this.draggable
         };
 
         return JSON.stringify(seria);

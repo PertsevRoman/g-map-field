@@ -17,7 +17,7 @@
                                         </div>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" v-model="point.draggable" checked="checked" />
+                                                <input type="checkbox" v-model="point.draggable" />
                                                 Перемещаемая
                                             </label>
                                         </div>
@@ -36,7 +36,10 @@
                                 <div class="col-lg-8">
                                     <div class="input-group">
                                         <span class="input-group-addon">{{point.label}}</span>
-                                        <input class="form-control" type="text" v-model="point.description">
+                                        <input class="form-control name-place" type="text" v-model="point.description">
+                                        <ul class="find-dropdown">
+                                            <li v-for="ahead in point.typeahead" v-on:click="setAhead(point, ahead)">{{ahead.title}}</li>
+                                        </ul>
                                         <span class="input-group-addon">
                                             <img class="pt-icon" v-bind:src="point.icon" alt="">
                                         </span>

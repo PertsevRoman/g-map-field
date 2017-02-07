@@ -1,6 +1,6 @@
 {
   "name": "g-map-field",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "authors": [
     "Pertsev Roman <pertsev.roman@gmail.com>"
   ],
@@ -22,7 +22,8 @@
     "bootstrap": "^3.3.7",
     "vue": "^2.1.6",
     "bootstrap-timepicker": "^0.5.2",
-    "components-font-awesome": "^4.7.0"
+    "components-font-awesome": "^4.7.0",
+    "awesomplete": "^1.1.1"
   },
   "devDependencies": {
     "flag-icon-css": "^2.7.0"

@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
     
-    
     let templateName = componentAnchor.getAttribute('template');
     let fieldValue = componentAnchor.getAttribute('field-value');
     let fieldName = componentAnchor.getAttribute('field-name');
@@ -85,6 +84,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         clearPath: function () {
                             this.currentPath.clear();
                         },
+                        setAhead: function (point, ahead) {
+                            point.setAhead(ahead);
+                            point.typeahead = [];
+                            
+                            this.renderer.render(this.currentPath);
+                        },
                         init: function () {
                             let element = this.$el.querySelector('.g-maps');
 
@@ -130,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 new Prof().$mount(componentName);
             } catch (error) {
+                console.log(error);
                 console.log('Не удается определить компонент: Vue.js не инициализирован');
             }
         });

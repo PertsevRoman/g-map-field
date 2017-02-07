@@ -53,6 +53,7 @@ gulp.task('webserver', ['watch'], function () {
                 directory: './example/'
             },
             open: true,
+            port: 8001,
             defaultFile: 'index.html'
         }));
 });

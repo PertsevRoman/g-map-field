@@ -33,8 +33,10 @@ export class MapMarker {
 
     set latLng(value) {
         this._latLng = value;
-        this.marker.setPosition(value);
+
+        this.marker.setPosition(new google.maps.LatLng(value.lat, value.lng));
     }
+    
     get visible() {
         return this._marker.getVisible();
     }
@@ -49,19 +51,22 @@ export class MapMarker {
 
     set icon(path) {
         this._icon = path;
-
-        // let icon = {
-        //     url: path,
-        //     anchor: new google.maps.Point(25,50),
-        //     scaledSize: new google.maps.Size(50,50)
-        // };
-        //
-        // this._marker.setIcon(icon);
     }
 
     set description(value) {
         this._description = value;
+
+        if(this._description != '') {
+            if(dropdownResolver != undefined) {
+                dropdownResolver(value, function (points) {
+                    this.typeahead = points;
+                }.bind(this));
+            }
+        } else {
+            this.typeahead = [];
+        }
     }
+    
     get label() {
         return this._label;
     }
@@ -99,6 +104,16 @@ export class MapMarker {
     
     remove() {
         this.marker.setMap(null);
+    }
+
+    setAhead(ahead) {
+        this.description = ahead.title;
+        const position = {
+            lat: ahead.lat,
+            lng: ahead.lng
+        };
+
+        this.latLng = position;
     }
 
     set serial(value) {
@@ -151,7 +166,7 @@ export class MapMarker {
     _label = '';
     _visible = true;
     _icon = '';
-
+    typeahead = [];
 
     getPosition() {
         return this._marker.getPosition();

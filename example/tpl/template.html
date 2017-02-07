@@ -37,7 +37,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon">{{point.label}}</span>
                                         <input class="form-control name-place" type="text" v-model="point.description">
-                                        <ul class="find-dropdown">
+                                        <ul v-if="point.typeahead.length > 0" class="find-dropdown">
                                             <li v-for="ahead in point.typeahead" v-on:click="setAhead(point, ahead)">{{ahead.title}}</li>
                                         </ul>
                                         <span class="input-group-addon">

@@ -36,7 +36,7 @@ export class MapMarker {
 
         this.marker.setPosition(new google.maps.LatLng(value.lat, value.lng));
     }
-    
+
     get visible() {
         return this._marker.getVisible();
     }
@@ -55,6 +55,11 @@ export class MapMarker {
 
     set description(value) {
         this._description = value;
+
+        if(this._ahead) {
+            this._ahead = false;
+            return;
+        }
 
         if(this._description != '') {
             if(dropdownResolver != undefined) {
@@ -107,7 +112,10 @@ export class MapMarker {
     }
 
     setAhead(ahead) {
+        this._ahead = true;
+
         this.description = ahead.title;
+
         const position = {
             lat: ahead.lat,
             lng: ahead.lng

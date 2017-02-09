@@ -17,8 +17,7 @@ const uglify      = require('gulp-uglify');
 const jsDest = './dist/js';
 
 gulp.task('compile', function() {
-    browserify(['./src/js/index.js'], { debug: true })
-        .add(require.resolve('./node_modules/babel-polyfill/dist/polyfill'))
+    browserify([require.resolve('./node_modules/babel-polyfill/dist/polyfill'), './src/js/index.js'], { debug: true })
         .transform(babelify)
         .bundle()
         .on('error', util.log.bind(util, 'Browserify Error'))
@@ -30,8 +29,7 @@ gulp.task('compile', function() {
 });
 
 gulp.task('compile-min', function () {
-    browserify(['./src/js/index.js'], { debug: true })
-        .add(require.resolve('./node_modules/babel-polyfill/dist/polyfill'))
+    browserify([require.resolve('./node_modules/babel-polyfill/dist/polyfill'), './src/js/index.js'], { debug: true })
         .transform(babelify)
         .bundle()
         .on('error', util.log.bind(util, 'Browserify Error'))

@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 const elemPosition = this.currentPath.size;
 
                                 /* rem-block */
-                                alert('Adding point...');
+                                console.log('Adding point...');
                                 /* end-rem-block */
 
                                 setTimeout(function () {
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                         this.currentPath.pointValue(index, 'time', value);
 
                                         /* rem-block */
-                                        alert('Point added');
+                                        console.log('Point added');
                                         /* end-rem-block */
                                     }.bind(this));
                                 }.bind(this), 500);
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
 
                 /* rem-block */
-                alert('Load component...');
+                console.log('Load component...');
                 /* end-rem-block */
 
                 new Prof().$mount(componentName);

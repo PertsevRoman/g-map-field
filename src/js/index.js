@@ -98,12 +98,20 @@ document.addEventListener('DOMContentLoaded', function () {
                             this.renderer = new Renderer(this.map);
 
                             this.currentPath.addUpdateListener(function () {
+                                /* rem-block */
+                                console.log('Path updating...');
+                                /* end-rem-block */
+
                                 this.renderer.render(this.currentPath);
                                 this.$forceUpdate();
                             }.bind(this));
 
                             this.pathGenerator.appendAddListener(function () {
                                 const elemPosition = this.currentPath.size;
+
+                                /* rem-block */
+                                console.log('Adding point...');
+                                /* end-rem-block */
 
                                 setTimeout(function () {
                                     const selector = 'input[date-time="dt-' + (elemPosition - 1) + '"]';
@@ -116,6 +124,10 @@ document.addEventListener('DOMContentLoaded', function () {
                                         let index = pickerAnchor.attr('data-index');
 
                                         this.currentPath.pointValue(index, 'time', value);
+
+                                        /* rem-block */
+                                        console.log('Point added');
+                                        /* end-rem-block */
                                     }.bind(this));
                                 }.bind(this), 500);
                             }.bind(this));
@@ -132,6 +144,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 });
+
+                /* rem-block */
+                console.log('Load component...');
+                /* end-rem-block */
 
                 new Prof().$mount(componentName);
             } catch (error) {

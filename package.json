@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "ignore": [ "example" ],
+  "ignore": [
+    "example"
+  ],
   "author": "Roman Pertsev <pertsev.roman@gmail.com>",
   "license": "ISC",
   "devDependencies": {
@@ -28,6 +30,8 @@
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.1",
     "gulp-server-livereload": "^1.9.2",
+    "gulp-strip-code": "^0.1.4",
+    "gulp-uglify": "^2.0.1",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.11",
     "polyfill": "^0.1.0",

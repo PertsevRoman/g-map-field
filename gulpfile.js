@@ -11,6 +11,8 @@ const babelify= require('babelify');
 const util = require('gulp-util');
 const buffer = require('vinyl-buffer');
 const source = require('vinyl-source-stream');
+const stripCode = require('gulp-strip-code');
+const uglify      = require('gulp-uglify');
 
 const jsDest = './dist/js';
 
@@ -27,7 +29,25 @@ gulp.task('compile', function() {
         .pipe(gulp.dest(jsDest));
 });
 
-gulp.task('default', ['compile'], function() {
+gulp.task('compile-min', function () {
+    browserify(['./src/js/index.js'], { debug: true })
+        .add(require.resolve('./node_modules/babel-polyfill/dist/polyfill'))
+        .transform(babelify)
+        .bundle()
+        .on('error', util.log.bind(util, 'Browserify Error'))
+        .pipe(source('index.min.js'))
+        .pipe(buffer())
+        .pipe(gulpSourcemaps.init({loadMaps: true}))
+        .pipe(stripCode({
+            start_comment: "rem-block",
+            end_comment: "end-rem-block"
+        }))
+        .pipe(uglify())
+        .pipe(gulpSourcemaps.write('./'))
+        .pipe(gulp.dest(jsDest));
+});
+
+gulp.task('default', ['compile', 'compile-min'], function() {
 });
 
 gulp.task('watch', function () {

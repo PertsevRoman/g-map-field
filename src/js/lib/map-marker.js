@@ -2,13 +2,6 @@
  * Created by joker on 15.12.16.
  */
 export class MapMarker {
-    get typeahead() {
-        return this._typeahead;
-    }
-
-    set typeahead(value) {
-        this._typeahead = value;
-    }
     get draggable() {
         return this._marker.getDraggable();
     }
@@ -71,18 +64,21 @@ export class MapMarker {
         if(this._description != '') {
             if(dropdownResolver != undefined) {
                 dropdownResolver(value, function (points) {
-                    this._typeahead = [];
+                    let typeahead = [];
+                    
                     for(let index in points) {
-                        this._typeahead.push({
+                        typeahead.push({
                             name: points[index].name,
                             lat: points[index].lat,
                             lng: points[index].lng
                         });
                     }
+
+                    this.typeahead = typeahead;
                 }.bind(this));
             }
         } else {
-            this._typeahead = [];
+            this.typeahead = [];
         }
     }
     
@@ -188,7 +184,7 @@ export class MapMarker {
     _label = '';
     _visible = true;
     _icon = '';
-    _typeahead = [];
+    typeahead = [];
 
     getPosition() {
         return this._marker.getPosition();

@@ -114,7 +114,7 @@ export class MapMarker {
     setAhead(ahead) {
         this._ahead = true;
 
-        this.description = ahead.title;
+        this.description = ahead.name;
 
         const position = {
             lat: ahead.lat,

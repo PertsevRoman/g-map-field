@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         },
                         setAhead: function (point, ahead) {
                             point.setAhead(ahead);
+                            point.typeahead = [];
                             
                             this.renderer.render(this.currentPath);
                         },

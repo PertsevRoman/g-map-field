@@ -165,7 +165,10 @@ export class MapMarker {
         let pos = value.position;
 
         this.latLng = new google.maps.LatLng(pos);
+
+        this._ahead = true;
         this.description = value.description || '';
+
         if(value.label) {
             this.label = value.label + '';
         }

@@ -132,6 +132,8 @@ export class MapMarker {
         };
 
         this.latLng = position;
+
+        this.typeahead = [];
     }
 
     set serial(value) {

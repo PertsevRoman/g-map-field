@@ -67,11 +67,18 @@ export class MapMarker {
                     let typeahead = [];
                     
                     for(let index in points) {
-                        typeahead.push({
+                        let item = {
+                            id: points[index].id,
                             name: points[index].name,
                             lat: points[index].lat,
                             lng: points[index].lng
-                        });
+                        };
+
+                        if(points[index].display != undefined) {
+                            item['display'] = points[index].display;
+                        }
+
+                        typeahead.push(item);
                     }
 
                     this.typeahead = typeahead;

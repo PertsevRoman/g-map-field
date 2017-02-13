@@ -2,6 +2,14 @@
  * Created by joker on 15.12.16.
  */
 export class MapMarker {
+    get meta() {
+        return this._meta;
+    }
+
+    set meta(value) {
+        this._meta = value;
+    }
+
     get draggable() {
         return this._marker.getDraggable();
     }
@@ -68,7 +76,9 @@ export class MapMarker {
                     
                     for(let index in points) {
                         let item = {
-                            id: points[index].id,
+                            _meta: {
+                                id: points[index].id
+                            },
                             name: points[index].name,
                             lat: points[index].lat,
                             lng: points[index].lng
@@ -118,7 +128,8 @@ export class MapMarker {
             visible: this.visible,
             time: this.time,
             icon: this.icon,
-            draggable: this.draggable
+            draggable: this.draggable,
+            meta: this.meta
         };
 
         return JSON.stringify(seria);
@@ -145,6 +156,7 @@ export class MapMarker {
         }
 
         this.latLng = position;
+        this.meta = ahead._meta;
 
         this.typeahead = [];
     }
@@ -166,6 +178,7 @@ export class MapMarker {
 
         this.time = value.time || '0:00';
         this.icon = value.icon || '';
+        this.meta = value.meta || {};
 
         this.marker.setPosition(this.latLng);
         this.marker.setLabel(this.label);
@@ -200,6 +213,7 @@ export class MapMarker {
     _visible = true;
     _icon = '';
     typeahead = [];
+    _meta = {};
 
     getPosition() {
         return this._marker.getPosition();

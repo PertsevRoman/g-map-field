@@ -131,6 +131,12 @@ export class MapMarker {
             lng: ahead.lng
         };
 
+        if(ahead['display'] != undefined) {
+            if(ahead['display']['svg'] != undefined) {
+                this.icon = ahead['display']['svg'];
+            }
+        }
+
         this.latLng = position;
 
         this.typeahead = [];

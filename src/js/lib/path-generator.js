@@ -49,23 +49,10 @@ export class PathGenerator {
 
             let markersArray = JSON.parse(data);
 
-            let bounds  = new google.maps.LatLngBounds();
-
             for (let markerJson of markersArray) {
                 this.add(markerJson);
-
-                let pos = markerJson.position;
-
-                bounds.extend(new google.maps.LatLng({
-                    lat: pos.lat,
-                    lng: pos.lng
-                }));
             }
-            
-            return bounds;
         }
-        
-        return undefined;
     }
 
     finish() {

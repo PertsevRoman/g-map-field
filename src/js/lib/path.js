@@ -78,6 +78,18 @@ export class Path {
         this.callUpdateHandlers();
     }
 
+    get bounds() {
+        let bounds  = new google.maps.LatLngBounds();
+        
+        for(let marker of this._markers) {
+            let latLng = marker.getPosition();
+            
+            bounds.extend(latLng);
+        }
+        
+        return bounds;
+    }
+
     get coordsStr() {
         let res = '';
         

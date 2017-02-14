@@ -56,18 +56,19 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     },
                     methods: {
+                        fitContainer: function () {
+                            let bounds = this.currentPath.bounds;
+
+                            this.map.map.fitBounds(bounds);
+                            this.map.map.panToBounds(bounds);
+                        },
                         beginPath: function (data) {
                             if(this.currentPath) {
                                 this.currentPath.clear();
                             }
 
                             this.pathGenerator.defaultIcon = icons[0].icon;
-                            let bounds = this.pathGenerator.start(this.currentPath, data);
-
-                            if(bounds != undefined) {
-                                this.map.map.fitBounds(bounds);
-                                this.map.map.panToBounds(bounds);
-                            }
+                            this.pathGenerator.start(this.currentPath, data);
                         },
                         finishPath: function () {
                             this.pathGenerator.finish();
@@ -145,6 +146,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                                 this.$forceUpdate();
                             }.bind(this));
+
+                            this.fitContainer();
                         }
                     }
                 });

@@ -62,7 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
                             }
 
                             this.pathGenerator.defaultIcon = icons[0].icon;
-                            this.pathGenerator.start(this.currentPath, data);
+                            let bounds = this.pathGenerator.start(this.currentPath, data);
+
+                            if(bounds != undefined) {
+                                this.map.map.fitBounds(bounds);
+                                this.map.map.panToBounds(bounds);
+                            }
                         },
                         finishPath: function () {
                             this.pathGenerator.finish();

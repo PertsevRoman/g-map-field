@@ -147,9 +147,9 @@ document.addEventListener('DOMContentLoaded', function () {
                                 this.$forceUpdate();
                             }.bind(this));
 
-                            setTimeout(function () {
+                            window.addEventListener('resize', function () {
                                 this.fitContainer();
-                            }.bind(this), 1000);
+                            }.bind(this));
                         }
                     }
                 });
